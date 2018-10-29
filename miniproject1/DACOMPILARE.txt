@@ -1,0 +1,5 @@
+# Compilare questo file prima di inviare il progetto
+NOME: Francesco
+COGNOME: Coppola	
+MATRICOLA: 100746
+ANNO DI ISCRIZIONE AL PRIMO ANNO: 2017/2018
