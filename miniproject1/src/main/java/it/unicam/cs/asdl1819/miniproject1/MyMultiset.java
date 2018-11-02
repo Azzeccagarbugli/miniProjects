@@ -7,6 +7,8 @@ import java.util.Set;
 
 import org.w3c.dom.Element;
 
+import it.unicam.cs.asdl1819.miniproject1.MyMultiset.Elemento;
+
 /**
  * TODO spiegare come viene implementato il multiset.
  * 
@@ -16,12 +18,8 @@ import org.w3c.dom.Element;
  *            il tipo degli elementi del multiset
  */
 public class MyMultiset<E> implements Multiset<E> {
-    // TODO Inserire le variabili istanza che servono
-
-	private HashSet<Elemento> multiSet;
 	
-    // TODO Inserire eventuali classi interne per gli elementi del multinsieme e
-    // per l'iteratore.
+	private HashSet<Elemento> multiSet;
 	
 	public class Elemento {
 		private E riferimento;
@@ -38,6 +36,11 @@ public class MyMultiset<E> implements Multiset<E> {
 			}
 			this.occorrenze = occorrenze;
 		}
+		
+		@Override
+		public String toString() {
+			return "Oggetto: " + riferimento.toString() + ", occorrenze: " + occorrenze;
+		}
 	}
 	
     /**
@@ -48,7 +51,6 @@ public class MyMultiset<E> implements Multiset<E> {
     }
 
     public int size() {
-
     	int size = 0;
     	for(Elemento e : multiSet) {
     		size += e.occorrenze;
@@ -158,6 +160,10 @@ public class MyMultiset<E> implements Multiset<E> {
     			return tempOccorenze;
     		}
     	}
+    	
+    	Elemento p = new Elemento(element, count);
+    	multiSet.add(p);
+    	
         return 0;
     }
 
@@ -168,12 +174,51 @@ public class MyMultiset<E> implements Multiset<E> {
         }
         return setStuff;
     }
+    
+    private class MyMultiSetIterator implements Iterator<E> {
+    	Iterator<Elemento> itHash;
+    	int conteggioOccorrenze;
+    	Elemento tempRef;
+    	
+    	private MyMultiSetIterator() {
+    		itHash = multiSet.iterator();
+    		conteggioOccorrenze = 0;
+    		tempRef = null;
+    	}
+    	
+    	public boolean hasNext() {
+    		if((conteggioOccorrenze != 0) || itHash.hasNext()) {
+    			return true;
+    		}
+    		return false;
+    	}
+    	
+    	public E next() {
+    		if(conteggioOccorrenze == 0) {
+    			tempRef = itHash.next();
+    			if(tempRef == null) {
+    				throw new NoSuchElementException("Elementi iteratore terminati");
+    			}
+    			conteggioOccorrenze = tempRef.occorrenze;
+    			conteggioOccorrenze -= 1;
+    			return tempRef.riferimento;
+    		}
+    		else {
+    			conteggioOccorrenze -= 1;
+    			return tempRef.riferimento;
+    		}
+    	}
+    	
+    	public void clear() {
+    		while(itHash.hasNext()) {
+    			itHash.next();
+    			itHash.remove();
+    		}
+    	}
+    }
 
     public Iterator<E> iterator() {
-        @SuppressWarnings("unchecked")
-		Iterator<E> iterator = (Iterator<E>) multiSet.iterator();
-        
-        return iterator;
+        return new MyMultiSetIterator();
     }
 
     public boolean contains(Object element) {
@@ -190,11 +235,8 @@ public class MyMultiset<E> implements Multiset<E> {
     }
 
     public void clear() {
-    	Iterator<E> clearIt = this.iterator();
-    	while(clearIt.hasNext()) {
-    		clearIt.next();
-    		clearIt.remove();
-    	}
+    	MyMultiSetIterator clearIt = new MyMultiSetIterator();
+    	clearIt.clear();
     }
 
     public boolean isEmpty() {
@@ -217,20 +259,33 @@ public class MyMultiset<E> implements Multiset<E> {
     @SuppressWarnings("rawtypes")
 	@Override
 	public boolean equals(Object obj) {
-    	MyMultiset other = (MyMultiset) obj;
-    	if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof MyMultiset))
-			return false;
-		if (multiSet == null) {
-			if (other.multiSet != null)
-				return false;
-		} else if (!multiSet.equals(other.multiSet))
-			return false;
-		
-		return true;
-	}
+    	if (!(obj instanceof Multiset) || ((Multiset) obj).size() != size()) {
+    	    return false;
+    	}
 
+	    for (Elemento element : multiSet) {
+	    	if (this.count(element) != ((Multiset) obj).count(element)) {
+    	        return false;
+	      	}
+    	}
+
+	    return true;
+	}
+    
+    @Override
+    public String toString() {
+      MyMultiset<Elemento> added = new MyMultiset<Elemento>();
+      String result = "[";
+
+      for (Elemento element : multiSet) {
+        if (!added.contains(element)) {
+          if (added.size() > 0) {
+            result += "; ";
+          }
+          result += element.toString();
+        }
+        added.add(element);
+      }
+      return result + "]";
+    }
 }

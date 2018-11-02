@@ -1,12 +1,15 @@
 package it.unicam.cs.asdl1819.miniproject1;
 
+import java.util.HashSet;
 import java.util.SortedSet;
+
+import it.unicam.cs.asdl1819.miniproject1.MyMultiset.Elemento;
 
 /**
  * Un fattorizzatore è un agente che fattorizza un qualsiasi numero naturale nei
  * sui fattori primi.
  * 
- * @author Luca Tesei (template) Francesco Coppola (implementazione)
+ * @author Luca Tesei (template), Francesco Coppola (implementazione)
  *
  */
 public class Factoriser {
@@ -24,10 +27,25 @@ public class Factoriser {
      *                                      se si chiede di fattorizzare un
      *                                      numero minore di 1.
      */
+	
     public Multiset<Integer> getFactors(int n) {
-        // TODO implementation
-        return null;
+    	MyMultiset<Integer> myMultiSet = new MyMultiset<Integer>();
+    	
+    	if(n < 1) {
+    		throw new IllegalArgumentException("Il numero richiesto è minore di 1");
+    	}
+    	    	
+    	if(n == 1) {
+    		return myMultiSet;
+    	}
+    	
+        for (int i = 2; i <= n; i++) {
+            while (n % i == 0) {
+                myMultiSet.add(i); 
+                n = n / i; 
+            }
+        }
+        
+    	return myMultiSet;
     }
-
-    // TODO inserire eventuali metodi accessori come privati
 }
