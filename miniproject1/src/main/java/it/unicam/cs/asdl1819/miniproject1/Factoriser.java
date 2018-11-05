@@ -29,23 +29,25 @@ public class Factoriser {
      */
 	
     public Multiset<Integer> getFactors(int n) {
-    	MyMultiset<Integer> myMultiSet = new MyMultiset<Integer>();
     	
     	if(n < 1) {
     		throw new IllegalArgumentException("Il numero richiesto è minore di 1");
     	}
-    	    	
+    	
+    	MyMultiset<Integer> myMultiSet = new MyMultiset<Integer>();
+    	
     	if(n == 1) {
     		return myMultiSet;
     	}
     	
-        for (int i = 2; i <= n; i++) {
+    	CrivelloDiEratostene crivelloPrime = new CrivelloDiEratostene(n);
+    	
+        for (int i = 2; n != 1; i = crivelloPrime.nextPrime(i)) {
             while (n % i == 0) {
-                myMultiSet.add(i); 
-                n = n / i; 
+            	n = n / i;
+            	myMultiSet.add(i); 
             }
         }
-        
     	return myMultiSet;
     }
 }
