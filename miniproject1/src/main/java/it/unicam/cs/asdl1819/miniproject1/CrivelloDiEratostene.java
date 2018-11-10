@@ -11,8 +11,12 @@ import java.util.SortedSet;
  *
  */
 public class CrivelloDiEratostene {
-    // TODO definire le variabili istanza appropriate
-	
+	/*
+	 * Utilizzo del TreeSet giustificato dal fatto che gli elementi sono già ordinati
+	 * secondo l'ordine naturale (ordine crescente nel caso dei numeri del crivello)
+	 * e dal costo in termini computazionali di log(n) per quanto riguarda le
+	 * operazioni base sfruttate nella classe, quali add e remove.
+	 */
 	private TreeSet<Integer> primesNumbers;
 	private int maxCapacity;
 
@@ -26,27 +30,36 @@ public class CrivelloDiEratostene {
      *         se il numero {@code n} è minore di {@code 2}
      */
     public CrivelloDiEratostene(int n) {
+    	/*
+    	 * Il crivello viene costruito fino al numero in input al costruttore, che deve
+    	 * essere almeno due. Quando il costruttore è chiamato il crivello viene
+    	 * costruito e i numeri primi sono direttamente filtrati, pronti per gli altri
+    	 * metodi della classe.
+    	 */
     	primesNumbers = new TreeSet<Integer>();
     	maxCapacity = n;
     	
     	if (n < 2) {
-    		throw new IllegalArgumentException("Il numero inserito è minore di 2");
-    	}
+			throw new IllegalArgumentException("Il numero inserito in input al crivello è minore di due");
+		} 
     	else {
-    		for(int i = 2; i < n + 1; i++) {
-        		primesNumbers.add(i);
-        	}
-    	}
-    	
-    	for(int i = 2; i < n + 1; i++) {
-    		if(primesNumbers.contains(i)) {
-    			for(int j = 2; j < n + 1; j++) {
-    				if(primesNumbers.contains(j) && j != i && j % i == 0) {
-    					primesNumbers.remove(j);
-    				}
-    			}
-    		}
-    	}	
+			for (int z = 1; z <= this.maxCapacity; z++) {
+				primesNumbers.add(z);
+			}
+		}
+		
+		/*
+		 * Vengono eliminati i multipli dei numeri primi presenti nel crivello. Si
+		 * gestiscono solo numeri dispari in quanto tutti i primi diversi da due sono
+		 * dispari.
+		 */
+		for (int i1 = 2; i1 <= maxCapacity; i1 = i1 + 1) {
+			int i2 = i1 + i1;
+			while ((primesNumbers.contains(i1)) && (i2 <= maxCapacity)) {
+				primesNumbers.remove(i2);
+				i2 = i2 + i1;
+			}
+		}	
     }
 
     /**
@@ -62,12 +75,19 @@ public class CrivelloDiEratostene {
      *         crivello o se è un numero minore di 1.
      */
     public int nextPrime(int n) {
-    	handleException(n ,"Ciao amici");
-        if (n >= primesNumbers.last()) {
-        	return -1;
+    	/*
+    	 * Il metodo restituisce il numero primo successivo all'intero passato come
+    	 * argomento durante la chiamata. Restituisce errore se si fa una ricerca fuori
+    	 * dalla capacità del crivello. Restituisce -1 se non ci sono numeri primi dopo
+    	 * l'intero passato come argomento durante la chiamata.
+    	 */
+    	handleException(n ,"Il numero passato in input per la ricerca del numero primo eccede "
+    						+ "la capacità massima del crivello oppure è minore di uno");
+        if (primesNumbers.higher(n) != null) {
+        	return primesNumbers.higher(n);
         }
         else {
-        	return primesNumbers.higher(n);
+        	return -1;
         }
     }
 
@@ -79,7 +99,12 @@ public class CrivelloDiEratostene {
      * @return l'insieme dei numeri primi calcolati attraverso questo crivello.
      */
     public SortedSet<Integer> getPrimes() {
-        return primesNumbers;
+    	/*
+    	 * Restituisce un SortedSet contenente tutti i numeri primi, a partire da 2,
+    	 * contenuti nel crivello, ottenuti già durante l'invocazione del metodo
+    	 * costruttore della classe.
+    	 */
+        return primesNumbers.tailSet(2);
     }
 
     /**
@@ -89,6 +114,11 @@ public class CrivelloDiEratostene {
      * @return la capacità di questo crivello
      */
     public int getCapacity() {
+    	/*
+    	 * Restituisce il numero massimo di numeri che può contenere il crivello creato.
+    	 * Infatti viene restituito il valore massimo passato come argomento al
+    	 * costruttore durante la costruzione del crivello.
+    	 */
         return maxCapacity;
     }
 
@@ -104,7 +134,15 @@ public class CrivelloDiEratostene {
      *         crivello o se è un numero minore di 1.
      */
     public boolean isPrime(int n) {
-    	handleException(n , "Ciao amici");
+    	/*
+    	 * Restituisce un valore booleano che indica se il valore inserito come
+    	 * argomento è un numero primo. Il calcolo del valore booleano è influenzato dal
+    	 * crivello a cui ci si riferisce durante la chiamata di questo metodo (con
+    	 * particolare riferimento alla sua capacità massima). Restituisce errore se si
+    	 * fa una ricerca fuori dalla capacità del crivello.
+    	 */
+    	handleException(n ,"Il numero passato in input per la ricerca del numero primo eccede "
+							+ "la capacità massima del crivello oppure è minore di uno");
     	if (n == 1) {
     		return true;
     	}
@@ -112,13 +150,20 @@ public class CrivelloDiEratostene {
     		return primesNumbers.contains(n);
     	}
     }
-
-    // TODO inserire eventuali metodi accessori come privati
+    
+    /**
+     * Metodo privato di natura void che esegue un semplice controllo 
+     * matematico sul crivello. In caso di errore viene lanciata
+     * un eccezione.
+     * 
+     * @param n
+     *         il numero da controllare
+     * @param msg
+     * 		   il messaggio visualizzato in caso di errore
+     */
     private void handleException(int n, String msg) {
     	if (n < 1 || n > maxCapacity) {
     		throw new IllegalArgumentException(msg); 
     	}
     }
-    
-
 }
