@@ -1,5 +1,7 @@
 package it.unicam.cs.asdl1819.miniproject1;
 
+import java.util.SortedSet;
+
 /**
  * Un fattorizzatore è un agente che fattorizza un qualsiasi numero naturale nei
  * sui fattori primi.
@@ -68,9 +70,10 @@ public class Factoriser {
     		return myMultiSet;
     	}
     	
-    	crivelloPrime = new CrivelloDiEratostene((int)Math.ceil(Math.sqrt(n)));
+    	crivelloPrime = new CrivelloDiEratostene((int) Math.ceil(Math.sqrt(n)));
+    	SortedSet<Integer> listaPrimi = crivelloPrime.getPrimes();
     	
-        for (Integer i : crivelloPrime.getPrimes()) {
+        for (Integer i : listaPrimi) {
             while ((n % i) == 0) {
             	n = n / i;
             	myMultiSet.add(i); 

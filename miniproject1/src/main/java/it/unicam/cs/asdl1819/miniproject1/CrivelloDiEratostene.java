@@ -53,11 +53,11 @@ public class CrivelloDiEratostene {
 		 * gestiscono solo numeri dispari in quanto tutti i primi diversi da due sono
 		 * dispari.
 		 */
-		for (int i1 = 2; i1 <= maxCapacity; i1 = i1 + 1) {
-			int i2 = i1 + i1;
-			while ((primesNumbers.contains(i1)) && (i2 <= maxCapacity)) {
-				primesNumbers.remove(i2);
-				i2 = i2 + i1;
+		for (int var_1 = 2; var_1 <= maxCapacity; var_1 = var_1 + 1) {
+			int var_2 = (var_1 * 2);
+			while ((primesNumbers.contains(var_1)) && (var_2 <= maxCapacity)) {
+				primesNumbers.remove(var_2);
+				var_2 = var_2 + var_1;
 			}
 		}	
     }
