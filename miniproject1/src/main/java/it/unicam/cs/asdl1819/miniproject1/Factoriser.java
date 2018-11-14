@@ -25,7 +25,7 @@ public class Factoriser {
      *                                      numero minore di 1.
      */
 	
-	/*
+	/**
 	 * L'utilizzo dei seguenti oggetti permette di:
 	 * 
 	 * • myMultiSet:
@@ -40,7 +40,7 @@ public class Factoriser {
 	private CrivelloDiEratostene crivelloPrime;
 	
     public Multiset<Integer> getFactors(int n) {
-    	/*
+    	/**
     	 * Il seguente metodo getFactors, dato un numero intero, ritorna i suoi fattori
     	 * primi grazie all'implementazione di un crivello che effettua una scrematura
     	 * dei numeri inseriti e grazie a un algoritmo matematico di natura iterativa.
@@ -58,7 +58,7 @@ public class Factoriser {
 		 *	  <i>[Oggetto: 3, occorrenze: 1; Oggetto: 37, occorrenze: 1; Oggetto: 7, occorrenze: 1]</i>
 		 *
 		 * È possibile controllare i fattori primi di un numero a proprio piacimento compilando
-		 * il file main presente all'interno del package it.unicam.cs.asdl1819.miniproject1.
+		 * il file main presente all'interno del package <b>it.unicam.cs.asdl1819.miniproject1</b>.
     	 */
     	if(n < 1) {
     		throw new IllegalArgumentException("Il numero richiesto è minore di 1");
