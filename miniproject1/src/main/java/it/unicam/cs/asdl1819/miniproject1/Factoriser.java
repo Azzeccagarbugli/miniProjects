@@ -68,14 +68,19 @@ public class Factoriser {
     		return myMultiSet;
     	}
     	
-    	crivelloPrime = new CrivelloDiEratostene(n);
+    	crivelloPrime = new CrivelloDiEratostene((int)Math.ceil(Math.sqrt(n)));
     	
-        for (int i = 2; n != 1; i = crivelloPrime.nextPrime(i)) {
+        for (Integer i : crivelloPrime.getPrimes()) {
             while ((n % i) == 0) {
             	n = n / i;
             	myMultiSet.add(i); 
             }
         }
-    	return myMultiSet;
+        
+        if(n != 1) {
+        	myMultiSet.add(n);
+        }
+    	
+        return myMultiSet;
     }
 }
