@@ -20,7 +20,7 @@ public class CrivelloDiEratostene {
 	private TreeSet<Integer> primesNumbers;
 	private int maxCapacity;
 
-    /**
+    /*
      * Costruisce il crivello di Eratostene fino a un certo numero. Il numero
      * deve essere almeno 2.
      * 
@@ -75,7 +75,7 @@ public class CrivelloDiEratostene {
      *         crivello o se è un numero minore di 1.
      */
     public int nextPrime(int n) {
-    	/**
+    	/*
     	 * Il metodo restituisce il numero primo successivo all'intero passato come
     	 * argomento durante la chiamata. Restituisce errore se si fa una ricerca fuori
     	 * dalla capacità del crivello. 
@@ -101,7 +101,7 @@ public class CrivelloDiEratostene {
      * @return l'insieme dei numeri primi calcolati attraverso questo crivello.
      */
     public SortedSet<Integer> getPrimes() {
-    	/**
+    	/*
     	 * Restituisce un SortedSet contenente tutti i numeri primi, a partire da 2,
     	 * contenuti nel crivello, ottenuti già durante l'invocazione del metodo
     	 * costruttore della classe.
@@ -116,7 +116,7 @@ public class CrivelloDiEratostene {
      * @return la capacità di questo crivello
      */
     public int getCapacity() {
-    	/**
+    	/*
     	 * Restituisce il numero massimo di numeri che può contenere il crivello creato.
     	 * Infatti viene restituito il valore massimo passato come argomento al
     	 * costruttore durante la costruzione del crivello.
@@ -136,7 +136,7 @@ public class CrivelloDiEratostene {
      *         crivello o se è un numero minore di 1.
      */
     public boolean isPrime(int n) {
-    	/**
+    	/*
     	 * Restituisce un valore booleano che indica se il valore inserito come
     	 * argomento è un numero primo. Il calcolo del valore booleano è influenzato dal
     	 * crivello a cui ci si riferisce durante la chiamata di questo metodo (con

@@ -25,7 +25,7 @@ public class Factoriser {
      *                                      numero minore di 1.
      */
 	
-	/**
+	/*
 	 * L'utilizzo dei seguenti oggetti permette di:
 	 * 
 	 * • myMultiSet:
@@ -40,7 +40,7 @@ public class Factoriser {
 	private CrivelloDiEratostene crivelloPrime;
 	
     public Multiset<Integer> getFactors(int n) {
-    	/**
+    	/*
     	 * Il seguente metodo getFactors, dato un numero intero, ritorna i suoi fattori
     	 * primi grazie all'implementazione di un crivello che effettua una scrematura
     	 * dei numeri inseriti e grazie a un algoritmo matematico di natura iterativa.
@@ -70,6 +70,13 @@ public class Factoriser {
     		return myMultiSet;
     	}
     	
+    	/*
+    	 * Calcolo i numeri primi del crivello fino ad arrivare alla radice di n, considerando
+    	 * l'algoritmo di fattorizzazione "Metodo forza bruta migliorato".
+    	 * 
+    	 * In questo modo l'efficenza del progetto aumenta decisamente in quanto nel caso peggiore 
+    	 * il costo è di O(√n) <i>nell'assunzione poco reale di un modello di costo a costi costanti</i>.
+    	 */
     	crivelloPrime = new CrivelloDiEratostene((int) Math.ceil(Math.sqrt(n)));
     	SortedSet<Integer> listaPrimi = crivelloPrime.getPrimes();
     	

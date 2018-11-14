@@ -23,7 +23,7 @@ import java.util.Set;
  *            il tipo degli elementi del multiset
  */
 public class MyMultiset<E> implements Multiset<E> {
-	/**
+	/*
 	 * Dichiarazione della varibile multiSet come un HashSet, avente
 	 * come interfaccia l'inner class Elemento, costruita appositamente
 	 * per il funzionamento generale del codice.
@@ -31,7 +31,7 @@ public class MyMultiset<E> implements Multiset<E> {
 	private HashSet<Elemento> multiSet;
 	
 	public class Elemento {
-		/**
+		/*
 		 * La classe Elemento definisce, sostanzialmente, due punti cardini
 		 * dell'intero progetto: il riferimento dell'oggetto contenuto nella 
 		 * struttura dati in cui verrà implementata e il numero di 
@@ -64,14 +64,14 @@ public class MyMultiset<E> implements Multiset<E> {
 	}
 	
     public MyMultiset() {
-    	/**
+    	/*
          * Generazione di multiset attualmente vuoto.
          */
     	multiSet = new HashSet<Elemento>();
     }
 
     public int size() {
-    	/**
+    	/*
     	 * Metodo che inizializza una varibile intera chiamata size, inizialmente 
     	 * impostata a 0, la quale viene incrementata per ogni elemento 
     	 * trovato all'interno del multiset.
@@ -88,7 +88,7 @@ public class MyMultiset<E> implements Multiset<E> {
     }
 
     public int count(Object element) {
-    	/**
+    	/*
     	 * Dato in input un particolare oggetto, il metodo count restituirà 
     	 * le occorrenze con cui quest'ultimo appare all'interno del multiset.
     	 * 
@@ -108,7 +108,7 @@ public class MyMultiset<E> implements Multiset<E> {
     }
 
     public int add(E element, int occurrences) {
-    	/**
+    	/*
     	 * Questo metodo permette di aggiungere un determinato numero 
     	 * di volte, determinato appunto dal parametro locale 'occurrences', un 
     	 * particolare tipo oggetto di natura E al multiset instanziato.
@@ -141,7 +141,7 @@ public class MyMultiset<E> implements Multiset<E> {
     }
 
     public void add(E element) {
-    	/**
+    	/*
     	 * Metodo che aggiunge una sola occorrenza di un determinato 
     	 * elemento al multiset.
     	 *  
@@ -162,7 +162,7 @@ public class MyMultiset<E> implements Multiset<E> {
     }
 
     public int remove(Object element, int occurrences) {
-    	/**
+    	/*
     	 * Grazie a questo metodo è possibile andare a rimuovere un preciso 
     	 * elemento nel multiset per un numero 'occurrences' di volte, dove
     	 * quest'ultimo è proprio il secondo parametro locale del metodo.
@@ -200,7 +200,7 @@ public class MyMultiset<E> implements Multiset<E> {
     }
 
     public boolean remove(Object element) {
-    	/**
+    	/*
     	 * Il fine di questo metodo è andare a rimuovere una singola
     	 * occorrenza di un dato oggetto in input all'interno del multiset.
     	 * 
@@ -221,7 +221,7 @@ public class MyMultiset<E> implements Multiset<E> {
     }
 
     public int setCount(E element, int count) {
-    	/**
+    	/*
     	 * Il seguente metodo setCount permette di andare ad aggiungere o rimuovere
     	 * un determinato numero di volte, dato dal parametro locale intero count, un 
     	 * elemento personalizzato all'interno del multiset.
@@ -257,7 +257,7 @@ public class MyMultiset<E> implements Multiset<E> {
     }
 
     public Set<E> elementSet() {
-    	/**
+    	/*
     	 * Attraverso elemenetSet è possibile ottenere il set di elementi 
     	 * contenuti all'interno del multiset. Essi verranno comunque disposti 
     	 * in un oridine non definito e, soprattutto, in caso di oggetti aventi
@@ -272,7 +272,7 @@ public class MyMultiset<E> implements Multiset<E> {
     }
     
     private class MyMultiSetIterator implements Iterator<E> {
-    	/**
+    	/*
     	 * La classe privata MyMultiSetIterator implementa l'interfaccia 
     	 * Iterator e non fa nient'altro che andare a definire un iteratore 
     	 * personalizzato che posside dei metodi ben definiti:
@@ -331,7 +331,7 @@ public class MyMultiset<E> implements Multiset<E> {
     }
 
     public Iterator<E> iterator() {
-    	/**
+    	/*
     	 * Mediante questo metodo iterator è possibile ottenere un iteratore
     	 * per il multiset. L'iteratore deve contenere obbligatoriamente tutti
     	 * gli elementi del multiset e per ognuno di essi deve anche presentare 
@@ -341,7 +341,7 @@ public class MyMultiset<E> implements Multiset<E> {
     }
 
     public boolean contains(Object element) {
-    	/**
+    	/*
     	 * Il metodo contains di natura booleana restituisce un valore 
     	 * vero o falso a seconda di:
     	 * 
@@ -368,7 +368,7 @@ public class MyMultiset<E> implements Multiset<E> {
     }
 
     public void clear() {
-    	/**
+    	/*
     	 * Il seguente metodo istanzia un oggetto di natura MyMultiSetIterator 
     	 * chiamato clearIt che non fa nient'altro che rimuovere tutti gli
     	 * elementi presenti all'interno del multiset.
@@ -378,7 +378,7 @@ public class MyMultiset<E> implements Multiset<E> {
     }
 
     public boolean isEmpty() {
-    	/**
+    	/*
     	 * Il metodo isEmpty di natura booleana restituisce un valore 
     	 * vero o falso a seconda di:
     	 * 
@@ -398,7 +398,7 @@ public class MyMultiset<E> implements Multiset<E> {
 
     @Override
 	public int hashCode() {
-    	/**
+    	/*
     	 * Attraverso il seguente metodo è possibile ottenere l'hashCode 
     	 * identificativo del multiset.
     	 */
@@ -411,7 +411,7 @@ public class MyMultiset<E> implements Multiset<E> {
     @SuppressWarnings("rawtypes")
 	@Override
 	public boolean equals(Object obj) {
-    	/**
+    	/*
     	 * Il metodo equals effettua un operazione di uguaglianza su due multiset.
     	 * 
     	 * Più precisamente esso controlla innanzitutto se tutti gli oggetti all'interno
@@ -439,7 +439,7 @@ public class MyMultiset<E> implements Multiset<E> {
     
     @Override
     public String toString() {
-		/**
+		/*
 		 * Metodo personalizzato toString() utilizzato per l'operazione di debugging.
 		 */
       MyMultiset<Elemento> added = new MyMultiset<Elemento>();
