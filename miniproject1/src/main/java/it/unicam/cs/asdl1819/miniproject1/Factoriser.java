@@ -56,30 +56,48 @@ public class Factoriser {
 		 *	  System.out.println(m);
 		 *
 		 *	  <i>[Oggetto: 3, occorrenze: 1; Oggetto: 37, occorrenze: 1; Oggetto: 7, occorrenze: 1]</i>
-		 *
-		 * È possibile controllare i fattori primi di un numero a proprio piacimento compilando
-		 * il file main presente all'interno del package <b>it.unicam.cs.asdl1819.miniproject1</b>.
     	 */
     	if(n < 1) {
     		throw new IllegalArgumentException("Il numero richiesto è minore di 1");
     	}
     	
+    	/*
+    	 * Costruzione di un multiset composto da interi in cui verrà eseguito
+    	 * lo storage dei fattori primi del numero richiesto.
+    	 */
     	myMultiSet = new MyMultiset<Integer>();
     	
+    	/*
+    	 * Controllo che l'argomento del metodo getFactors sia uguale a 1, in maniera tale
+    	 * da restituire semplicemente il multiset, generato precedentemente, vuoto.
+    	 */
     	if(n == 1) {
     		return myMultiSet;
     	}
     	
     	/*
-    	 * Calcolo i numeri primi del crivello fino ad arrivare alla radice di n, considerando
-    	 * l'algoritmo di fattorizzazione "Metodo forza bruta migliorato".
+    	 * Calcolo i numeri primi del crivello fino ad arrivare alla radice quadrata di n
+    	 * considerando l'algoritmo di fattorizzazione "Metodo forza bruta migliorato".
     	 * 
     	 * In questo modo l'efficenza del progetto aumenta decisamente in quanto nel caso peggiore 
     	 * il costo è di O(√n) <i>nell'assunzione poco reale di un modello di costo a costi costanti</i>.
     	 */
     	crivelloPrime = new CrivelloDiEratostene((int) Math.ceil(Math.sqrt(n)));
+    	
+    	/*
+    	 * Inializzo una struttura dati di tipologia SortedSet, quindi iterabile, composta da 
+    	 * interi in cui eseguo il salvataggio di tutti i numeri primi calcolati nel crivello.
+    	 */
     	SortedSet<Integer> listaPrimi = crivelloPrime.getPrimes();
     	
+    	/*
+    	 * All'interno del seguente costrutto ciclico calcolo i fattori primi del numero
+    	 * n, passato come parametro locale del metodo, mediante un algoritmo di natura matematica.
+    	 * 
+    	 * Se l'intero con cui si sta divedendo il numero primo selezionato all'interno della lista 
+    	 * <i>listaPrimi</i> primi risulta avere resto 0 allora esso andrà ad essere aggiunto all'interno
+    	 * del multiset, struttura dati nella quale risiedono i fattori primi di n.
+    	 */
         for (Integer i : listaPrimi) {
             while ((n % i) == 0) {
             	n = n / i;
@@ -87,10 +105,21 @@ public class Factoriser {
             }
         }
         
+        /*
+         * L'espressione del costrutto if ha riscontro positivo soltanto se, dopo la
+         * prima parte della fattorizzazione, non ho all'interno del crivello altri
+         * numeri primi che siano fattori per l'argomento al metodo getFactors. In tal
+         * caso allora il valore stesso di n residuo delle fattorizzazioni è un numero
+         * primo da aggiungere al multiset dei fattori. 
+         */
         if(n != 1) {
         	myMultiSet.add(n);
         }
     	
+        /*
+         * In conclusione, dopo aver eseguito le operzioni di add nel multiset, posso restituire
+         * in maniera corretta la struttura dati contenente i fattori primi di n.
+         */
         return myMultiSet;
     }
 }

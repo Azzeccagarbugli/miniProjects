@@ -35,16 +35,26 @@ public class MyMultiset<E> implements Multiset<E> {
 		 * La classe Elemento definisce, sostanzialmente, due punti cardini
 		 * dell'intero progetto: il riferimento dell'oggetto contenuto nella 
 		 * struttura dati in cui verrà implementata e il numero di 
-		 * occorenze di quest'ultimo.
+		 * occorrenze di quest'ultimo.
 		 */
 		private E riferimento;
 		private int occorrenze;
-
+		
+		/*
+		 * Il costruttore della classe Elemento che prende come argomento
+		 * una variabile di tipo E, la quale indicherà il riferimento dell'oggetto
+		 * stesso, e una variabile di tipo intero che andrà a definire la frequenza
+		 * dell'oggetto stesso.
+		 */
 		public Elemento(E r, int n) {
 			this.riferimento = r;
 			this.occorrenze = n;
 		}
 		
+		/*
+		 * Mediante il seguente metodo si vanno a definire le occorrenze per un 
+		 * determinato oggetto.
+		 */
 		public void setOccorrenze(int occorrenze) {
 			if(occorrenze < 0) {
 				throw new IllegalArgumentException("Numero di occorenze minore di zero");
@@ -80,10 +90,25 @@ public class MyMultiset<E> implements Multiset<E> {
     	 * verranno comunque considerati come differenti, e di conseguenza
     	 * la variabile size terrà conto di entrambi.
     	 */
+    	
+    	/*
+    	 * Inializzo una varibile intera size in cui farò il salvataggio di tutte
+    	 * le occorrenze recuperate all'interno della struttura dati.
+    	 */
     	int size = 0;
+    	
+    	/*
+    	 * Per ogni oggetto trovato all'interno del multiset viene incrementata 
+    	 * la variabile size, che quindi terrà conto anche della frequanza multipla
+    	 * di un singolo oggetto.
+    	 */
     	for(Elemento e : multiSet) {
     		size += e.occorrenze;
     	}
+    	
+    	/*
+    	 * Restituisco la size del multiset.
+    	 */
         return size;
     }
 
@@ -99,11 +124,20 @@ public class MyMultiset<E> implements Multiset<E> {
     		throw new NullPointerException("Oggetto inserito in input non valido");
     	}
     	
+    	/*
+    	 * Attraverso il seguente costrutto calcolo le occorrenze di un particolare 
+    	 * oggetto che viene passato come argomento del metodo stesso.
+    	 */
     	for(Elemento e : multiSet) {
     		if(e.riferimento.equals(element)) {
     			return e.occorrenze;
     		}
     	}
+    	
+    	/*
+    	 * Nel caso in cui l'oggetto non sia presente all'interno del metodo stesso
+    	 * allora ritornerà il valore 0.
+    	 */
         return 0;
     }
 
@@ -129,14 +163,35 @@ public class MyMultiset<E> implements Multiset<E> {
     		throw new NullPointerException("Oggetto inserito in input non valido");
     	}
     	
+    	/*
+    	 * Viene inizialmente ciclata la struttura dati. Se l'oggetto inserito 
+    	 * al suo interno è già presente allora verrà semplicemente aumentata 
+    	 * la sua moltiplicità di 'occurrences' volte, ovvero di quante volte
+    	 * l'utente ha intenzione di aggiungere l'oggetto stesso.
+    	 */
     	for(Elemento e : multiSet) {
     		if(e.riferimento.equals(element)) {
     			int backupOccurrences = e.occorrenze;
     			e.setOccorrenze(e.occorrenze + occurrences);
+    			/*
+    			 * Viene restituito il valore dell'occorrenze prima dell'operazione
+    			 * di aggiunta dell'oggetto all'interno del multiset.
+    			 */
     			return backupOccurrences;
     		}
     	}
+    	
+    	/*
+    	 * Nel caso in cui l'oggetto non sia già presente nel multiset allora
+    	 * esso verrà inserito con una frequenza determinata dal parametro intero
+    	 * 'occurrences' passato come argomento del metodo stesso.
+    	 */
     	multiSet.add(new Elemento(element, occurrences));
+    	
+    	/*
+    	 * Nel caso in cui l'oggetto non fosse già presente, e quindi la
+    	 * sua frequenza fosse uguale a zero, verrà restituto il valore 0.
+    	 */
         return 0;
     }
 
@@ -152,12 +207,22 @@ public class MyMultiset<E> implements Multiset<E> {
     		throw new NullPointerException("Oggetto inserito in input non valido");
     	}
     	
+    	/*
+    	 * Viene completamente ciclata la struttura dati. Se l'oggetto inserito 
+    	 * al suo interno è già presente al suo interno allora verrà semplicemente
+    	 * aumentata la sua moltiplicità.
+    	 */
     	for(Elemento e : multiSet) {
     		if(e.riferimento.equals(element)) {
     			e.setOccorrenze(++e.occorrenze);
     			return;
     		}
     	}
+    	
+    	/*
+    	 * Nel caso in cui l'oggetto non sia già presente nel multiset allora
+    	 * esso verrà inserito con una frequenza uguale a 1.
+    	 */
     	multiSet.add(new Elemento(element, 1));
     }
 
@@ -183,19 +248,55 @@ public class MyMultiset<E> implements Multiset<E> {
     		throw new NullPointerException("Oggetto inserito in input non valido");
     	}
     	
+    	/*
+    	 * Viene ciclata la struttura dati.
+    	 */
     	for(Elemento e : multiSet) {
+    		/*
+    		 * Nel caso in cui l'esito del costrutto if sia positivo allora verrà
+    		 * rimosso un oggetto per 'occurrences' volte desiderate dall'utente.
+    		 */
     		if(e.riferimento.equals(element)) {
+    			/*
+    			 * Variabile temporanea in cui vengono salvate le occorrenze dell'oggetto
+    			 * desiderato prima di effettuare delle possibili operzioni di rimozione.
+    			 */
     			int tempOccorenze = e.occorrenze;
+    			
     			if(occurrences >= e.occorrenze) {
+    				/*
+    				 * Siccome le occorrenze richieste per la rimozione dell'oggetto
+    				 * risultano essere maggiori di quelle dell'oggetto stesso all'interno
+    				 * al multiset allora l'oggetto verrà rimosso completamente.
+    				 */
     				multiSet.remove(e);
+    				
+    				/*
+    				 * Viene restituito il valore dell'occorrenze prima dell'operazione
+    				 * di rimozione.
+    				 */
     				return tempOccorenze;
     			}
     			else {
+    				/*
+    				 * Viene decrementato il valore dell'occorrenze di uno specifico oggetto
+    				 * di 'occurrences' volte.
+    				 */
     				e.setOccorrenze(e.occorrenze - occurrences);
+    				
+    				/*
+    				 * Viene restituito il valore dell'occorrenze prima dell'operazione
+    				 * di rimozione.
+    				 */
     				return tempOccorenze;
     			}
     		}
     	}
+    	
+    	/*
+    	 * Nel caso in cui l'oggetto non fosse già presente, e quindi la
+    	 * sua frequenza fosse uguale a zero, verrà restituto il valore 0.
+    	 */
     	return 0;
     }
 
@@ -211,12 +312,26 @@ public class MyMultiset<E> implements Multiset<E> {
     		throw new NullPointerException("Oggetto inserito in input non valido");
     	}
     	
+    	/*
+    	 * Viene decrementato di un'unità il valore della frequanza di un oggetto.
+    	 */
     	for(Elemento e : multiSet) {
     		if(e.riferimento.equals(element)) {
     			e.setOccorrenze(--e.occorrenze);
+    			/*
+    			 * Confermo la presenza dell'oggetto all'interno del multiset 
+    			 * e l'esito della rimozione andando a restituire un valore booleano
+    			 * true.
+    			 */
     			return true;
     		}
     	}
+    	
+    	/*
+		 * Non confermo la presenza dell'oggetto all'interno del multiset 
+		 * né tanto meno l'esito della rimozione andando a restituire un 
+		 * valore booleano false.
+		 */
         return false;
     }
 
@@ -242,6 +357,11 @@ public class MyMultiset<E> implements Multiset<E> {
     		throw new NullPointerException("Oggetto inserito in input non valido");
     	}
     	
+    	/*
+    	 * Una volta ciclato tutto il multiset vengono aggiunti o rimossi
+    	 * oggetti, e in caso aumentata o decrementata la loro frequenza,
+    	 * all'interno della struttura dati.
+    	 */
     	for(Elemento e : multiSet) {
     		if(e.riferimento.equals(element)) {
     			int tempOccorenze = e.occorrenze;
@@ -250,9 +370,18 @@ public class MyMultiset<E> implements Multiset<E> {
     		}
     	}
     	
+    	/*
+    	 * Viene creato un oggetto temporaneo p che viene immediatamente aggiunto 
+    	 * al multiset solamente nel caso in cui non sia già presente all'interno
+    	 * della struttura dati.
+    	 */
     	Elemento p = new Elemento(element, count);
     	multiSet.add(p);
     	
+    	/*
+    	 * Nel caso in cui l'oggetto non fosse già presente, e quindi la
+    	 * sua frequenza fosse uguale a zero, verrà restituto il valore 0.
+    	 */
         return 0;
     }
 
@@ -293,6 +422,9 @@ public class MyMultiset<E> implements Multiset<E> {
     	int conteggioOccorrenze;
     	Elemento tempRef;
     	
+    	/*
+    	 * Costruisco il mio oggetto MyMultiSetIterator.
+    	 */
     	private MyMultiSetIterator() {
     		itHash = multiSet.iterator();
     		conteggioOccorrenze = 0;
@@ -300,6 +432,13 @@ public class MyMultiset<E> implements Multiset<E> {
     	}
     	
     	public boolean hasNext() {
+    		/*
+    		 * Attraverso il seguente costrutto if controllo se un determinato
+    		 * oggetto posside un elemento successivo oppure no. 
+    		 * 
+    		 * Nel caso positivo il metodo restituirà un valore true mentre in 
+    		 * caso negativo il valore restituito sarà false.
+    		 */
     		if((conteggioOccorrenze != 0) || itHash.hasNext()) {
     			return true;
     		}
@@ -307,6 +446,9 @@ public class MyMultiset<E> implements Multiset<E> {
     	}
     	
     	public E next() {
+    		/*
+    		 * Restituisco l'oggetto di natura E successivo a quello corrente.
+    		 */
     		if(conteggioOccorrenze == 0) {
     			tempRef = itHash.next();
     			if(tempRef == null) {
@@ -323,6 +465,11 @@ public class MyMultiset<E> implements Multiset<E> {
     	}
     	
     	public void clear() {
+    		/*
+    		 * Finchè c'è almeno uno e un solo elemento all'interno del multiset
+    		 * effettuo un operazione di scorrimento dell'elemento e poi lo rimuovo
+    		 * dalla struttura dati.
+    		 */
     		while(itHash.hasNext()) {
     			itHash.next();
     			itHash.remove();
@@ -399,8 +546,8 @@ public class MyMultiset<E> implements Multiset<E> {
     @Override
 	public int hashCode() {
     	/*
-    	 * Attraverso il seguente metodo è possibile ottenere l'hashCode 
-    	 * identificativo del multiset.
+    	 * Attraverso il seguente metodo, generato in maniera autonoma 
+    	 * dall'IDE, è possibile ottenere l'hashCode identificativo del multiset.
     	 */
 		final int prime = 31;
 		int result = 1;
