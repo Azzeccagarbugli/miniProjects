@@ -156,7 +156,7 @@ public class CrivelloDiEratostene {
     /**
      * Metodo privato di natura void che esegue un semplice controllo 
      * matematico sul crivello. In caso di errore viene lanciata
-     * un eccezione.
+     * un eccezione avente un messaggio personalizzato.
      * 
      * @param n
      *         il numero da controllare

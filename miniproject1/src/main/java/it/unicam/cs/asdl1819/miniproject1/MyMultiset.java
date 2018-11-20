@@ -414,9 +414,6 @@ public class MyMultiset<E> implements Multiset<E> {
     	 * 		Restituisce l'elemento successivo a quello selezionato.
     	 * 		In caso in cui non ci siano più elementi all'interno
     	 * 		dell'iteratore verrà lanciata un eccezione.
-    	 * • clear():
-    	 * 		Banalmente vengono eliminati tutti gli elementi 
-    	 * 		all'interno dell'iteratore.
     	 */
     	Iterator<Elemento> itHash;
     	int conteggioOccorrenze;
@@ -463,18 +460,6 @@ public class MyMultiset<E> implements Multiset<E> {
     			return tempRef.riferimento;
     		}
     	}
-    	
-    	public void clear() {
-    		/*
-    		 * Finchè c'è almeno uno e un solo elemento all'interno del multiset
-    		 * effettuo un operazione di scorrimento dell'elemento e poi lo rimuovo
-    		 * dalla struttura dati.
-    		 */
-    		while(itHash.hasNext()) {
-    			itHash.next();
-    			itHash.remove();
-    		}
-    	}
     }
 
     public Iterator<E> iterator() {
@@ -516,12 +501,11 @@ public class MyMultiset<E> implements Multiset<E> {
 
     public void clear() {
     	/*
-    	 * Il seguente metodo istanzia un oggetto di natura MyMultiSetIterator 
-    	 * chiamato clearIt che non fa nient'altro che rimuovere tutti gli
-    	 * elementi presenti all'interno del multiset.
+    	 * Il seguente metodo ripulisce interamente l'intero multiset, andando
+    	 * a cancellare ogni elemento che si trova al suo interno utilizzando il
+    	 * metodo 'clear' già definito nel HashSet.
     	 */
-    	MyMultiSetIterator clearIt = new MyMultiSetIterator();
-    	clearIt.clear();
+    	multiSet.clear();
     }
 
     public boolean isEmpty() {
@@ -547,7 +531,8 @@ public class MyMultiset<E> implements Multiset<E> {
 	public int hashCode() {
     	/*
     	 * Attraverso il seguente metodo, generato in maniera autonoma 
-    	 * dall'IDE, è possibile ottenere l'hashCode identificativo del multiset.
+    	 * dall'IDE, è possibile ottenere l'hashCode univoco identificativo 
+    	 * del multiset.
     	 */
 		final int prime = 31;
 		int result = 1;
