@@ -17,6 +17,10 @@ import java.util.Set;
  * 
  * È severamente vietato inserire un elemento di tipo nullo nel multiset.
  * 
+ * Il multiset costruito di seguito è formato da un HashSet di oggetti di tipo Elemento, 
+ * che a loro volta contengono i riferimenti agli oggetti di tipo generico che immagazzina
+ * il multiset ed il numero di occorrenze di tali oggetti.
+ * 
  * @author Luca Tesei (template), Francesco Coppola (implementazione)
  *
  * @param <E>
@@ -65,6 +69,47 @@ public class MyMultiset<E> implements Multiset<E> {
 			}
 			
 			this.occorrenze = occorrenze;
+		}
+		
+		/*
+		 * Metodi hashCode e equals interni alla classe Elemento generati
+		 * automaticamente dall'IDE.
+		 */
+		
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + occorrenze;
+			result = prime * result + ((riferimento == null) ? 0 : riferimento.hashCode());
+			return result;
+
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (!(obj instanceof MyMultiset.Elemento)) {
+				return false;
+			}
+			@SuppressWarnings("unchecked")
+			Elemento other = (Elemento) obj;
+			if (occorrenze != other.occorrenze) {
+				return false;
+			}
+			if (riferimento == null) {
+				if (other.riferimento != null) {
+					return false;
+				}
+			} else if (!riferimento.equals(other.riferimento)) {
+				return false;
+			}
+			return true;
 		}
 		
 		@Override
@@ -556,18 +601,52 @@ public class MyMultiset<E> implements Multiset<E> {
     	 * i due multiset sono uguali, mentre nel caso in cui una delle due fallisca,
     	 * l'esito finale sarà negativo.
     	 */
-    	if (!(obj instanceof Multiset) || ((Multiset) obj).size() != size()) {
-    	    return false;
-    	}
 
-	    for (Elemento element : multiSet) {
-	    	if (this.count(element) != ((Multiset) obj).count(element)) {
-    	        return false;
-	      	}
-    	}
+		/*
+		 * Si controlla se l'oggetto passato in input è un'istanza di MyMultiset.
+		 */
+		if (!(obj instanceof MyMultiset)) {
+			return false;
+		}
 
-	    return true;
+		/*
+		 * Se l'oggetto è nullo, si controlla se other è nullo, in caso negativo ritorna
+		 * false.
+		 */
+		if (multiSet == null) {
+			if (((MyMultiset) obj).multiSet != null) {
+				return false;
+			}
+		}
+
+		/*
+		 * Se la size dei due multiset è diversa ritorna false.
+		 */
+		if (((MyMultiset) obj).size() != size()) {
+			return false;
+		}
+
+		/*
+		 * Se la size del multiset è 0, si stanno confrontando due multiset vuoti, che
+		 * quindi sono per forza uguali.
+		 */
+		if (size() == 0) {
+			return true;
+		}
+
+		/*
+		 * Se tutti gli elementi nel multiset dell'oggetto corrente sono contenuti nel
+		 * multiset dell'altro oggetto, i due multiSet sono uguali.
+		 */
+		for (Elemento element : multiSet) {
+			if (((MyMultiset) obj).multiSet.contains(element)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
+    
     
     @Override
     public String toString() {
